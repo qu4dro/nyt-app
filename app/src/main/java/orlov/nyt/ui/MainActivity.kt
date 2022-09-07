@@ -1,8 +1,10 @@
 package orlov.nyt.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -10,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import orlov.nyt.R
 import orlov.nyt.databinding.ActivityMainBinding
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -21,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.nvBottomNavigation.visibility = View.GONE
         setNavController()
     }
 
@@ -28,10 +32,9 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.findNavController()
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.splashFragment -> hideNavBar()
-                R.id.authFragment -> hideNavBar()
+                R.id.splashFragment, R.id.authFragment -> hideNavBar()
                 else -> showNavBar()
             }
         }
@@ -51,7 +54,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideNavBar() {
         binding.nvBottomNavigation.apply {
-            if (this.visibility == View.VISIBLE) this.visibility = View.GONE
+            if (this.visibility == View.VISIBLE) {
+                this.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun onBackPressed() {
+        when (binding.nvBottomNavigation.selectedItemId) {
+            R.id.homeFragment, R.id.searchFragment, R.id.profileFragment, R.id.bookmarksFragment -> finish()
+            else -> super.onBackPressed()
         }
     }
 }
