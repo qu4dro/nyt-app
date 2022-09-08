@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Text" parent="TextAppearance.AppCompat" />
+
+
+    <style name="Text.Logo">
+        <item name="fontFamily">@font/chomsky</item>
+        <item name="android:textSize">256sp</item>
+    </style>
+
+    <style name="Text.Header">
+        <item name="fontFamily">@font/chomsky</item>
+        <item name="android:textSize">32sp</item>
+    </style>
+
+</resources>
