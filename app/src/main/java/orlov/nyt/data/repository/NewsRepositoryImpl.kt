@@ -7,6 +7,7 @@ import orlov.nyt.domain.model.Article
 import orlov.nyt.domain.repository.NewsRepository
 import orlov.nyt.utils.Request
 import orlov.nyt.utils.RequestUtils
+import timber.log.Timber
 import javax.inject.Inject
 
 class NewsRepositoryImpl @Inject constructor(
@@ -16,8 +17,8 @@ class NewsRepositoryImpl @Inject constructor(
     override suspend fun fetchTopNews(): Flow<Request<List<Article>>> {
         return RequestUtils.requestFlow {
             val response = newsService.fetchTopNews()
-            val news = response.results.map { it.mapToDomain() }
-            news
+            val news = response.results
+            news.map { it.mapToDomain() }
         }
     }
 

@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.launch
 import orlov.nyt.R
 import orlov.nyt.databinding.FragmentHomeBinding
-import orlov.nyt.ui.viewmodels.NewsViewModel
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    private val viewModel: NewsViewModel by activityViewModels()
+    private val viewModel: HomeViewModel by activityViewModels()
 
     private var _binding: FragmentHomeBinding? = null
     val binding
@@ -30,6 +33,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.fetchTopNews()
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    when (uiState.loadState) {
+                        LoadState.LOADING -> {}
+                        LoadState.ERROR -> {}
+                        LoadState.SUCCESS -> {}
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
