@@ -1,6 +1,9 @@
 package orlov.nyt.utils
 
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.view.View
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -28,4 +31,11 @@ fun BottomNavigationView.hide() {
     if (visibility == View.VISIBLE) {
         visibility = View.GONE
     }
+}
+
+fun ImageView.setBlackAndWhite() {
+    val matrix: ColorMatrix = ColorMatrix()
+    matrix.setSaturation(0F);
+    val filter =  ColorMatrixColorFilter(matrix);
+    colorFilter = filter
 }

@@ -22,6 +22,10 @@ class HomeViewModel @Inject constructor(private val newsUseCases: NewsUseCases) 
 
     private var fetchJob: Job? = null
 
+    init {
+        fetchTopNews()
+    }
+
     fun fetchTopNews() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch(Dispatchers.IO) {
