@@ -12,10 +12,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.google.android.material.chip.Chip
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import orlov.nyt.R
 import orlov.nyt.databinding.FragmentHomeBinding
 import orlov.nyt.ui.adapters.ArticlesAdapter
+import orlov.nyt.utils.collectLatestLifecycleFlow
+import timber.log.Timber
 
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -47,8 +50,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     when (uiState.loadState) {
-                        LoadState.LOADING -> {setLoadingUI()}
-                        LoadState.ERROR -> {setErrorUI()}
+                        LoadState.LOADING -> {
+                            setLoadingUI()
+                        }
+                        LoadState.ERROR -> {
+                            setErrorUI()
+                        }
                         LoadState.SUCCESS -> {
                             adapter.submitList(uiState.articleItems)
                             setSuccessUI()
@@ -60,6 +67,31 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun setupUI() {
+        setupNewsRecycler()
+        setupSectionChips()
+        binding.apply {
+            swipeRefresh.setOnRefreshListener {
+                viewModel.fetchTopNews()
+            }
+        }
+    }
+
+    private fun setupSectionChips() {
+        binding.apply {
+            viewModel.uiState.value.sections.forEach { section ->
+                val chip = Chip(requireContext())
+                chip.text = section
+                chip.setOnClickListener {
+                    viewModel.selectSection(section)
+                    viewModel.fetchTopNews(section)
+                    rvTrendingNews.scrollToPosition(0)
+                }
+                chipsSection.addView(chip)
+            }
+        }
+    }
+
+    private fun setupNewsRecycler() {
         binding.apply {
             rvTrendingNews.adapter = adapter
             rvTrendingNews.layoutManager = GridLayoutManager(requireActivity(), 2).also {
@@ -72,20 +104,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         }
                     }
                 }
-            }
-
-            viewModel.uiState.value.sections.forEach { section ->
-                val chip = Chip(requireContext())
-                chip.text = section
-                chip.setOnClickListener {
-                    viewModel.selectSection(section)
-                    viewModel.fetchTopNews()
-                }
-                chipsSection.addView(chip)
-            }
-
-            swipeRefresh.setOnRefreshListener {
-                viewModel.fetchTopNews()
             }
         }
     }
