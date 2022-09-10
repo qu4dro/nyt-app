@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class FetchTopNewsUseCase @Inject constructor(private val newsRepository: NewsRepository) {
 
-    suspend operator fun invoke() = newsRepository.fetchTopNews()
+    suspend operator fun invoke(section: String) = newsRepository.fetchTopNews(section)
 
 }

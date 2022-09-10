@@ -26,10 +26,10 @@ class HomeViewModel @Inject constructor(private val newsUseCases: NewsUseCases) 
         fetchTopNews()
     }
 
-    fun fetchTopNews() {
+    fun fetchTopNews(section: String = _uiState.value.selectedSection) {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch(Dispatchers.IO) {
-            newsUseCases.fetchTopNewsUseCase.invoke().collect { request ->
+            newsUseCases.fetchTopNewsUseCase.invoke(section).collect { request ->
                 when (request) {
                     is Request.Error -> {
                         _uiState.update { it.copy(loadState = LoadState.ERROR) }
@@ -39,10 +39,20 @@ class HomeViewModel @Inject constructor(private val newsUseCases: NewsUseCases) 
                     }
                     is Request.Success -> {
                         val articles = request.data ?: listOf()
-                        _uiState.update { it.copy(loadState = LoadState.SUCCESS, articleItems = articles) }
+                        _uiState.update {
+                            it.copy(
+                                loadState = LoadState.SUCCESS,
+                                articleItems = articles
+                            )
+                        }
                     }
                 }
             }
         }
     }
+
+    fun selectSection(newSelectedSection: String) {
+        _uiState.update { it.copy(selectedSection = newSelectedSection) }
+    }
+
 }

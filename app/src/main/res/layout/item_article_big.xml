@@ -63,13 +63,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
-            <View
+            <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/black"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:alpha="0.05"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_author_date" />
         </androidx.constraintlayout.widget.ConstraintLayout>

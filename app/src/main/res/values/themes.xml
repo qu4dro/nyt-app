@@ -3,11 +3,11 @@
     <style name="Theme.NYT" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/green_deep</item>
+        <item name="colorPrimaryVariant">@color/green_middle</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorSecondary">@color/green_deep</item>
+        <item name="colorSecondaryVariant">@color/green_deep</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?android:colorBackground</item>
@@ -19,7 +19,7 @@
 
         <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@android:color/transparent</item>
 
-        <item name="colorPrimaryContainer">@color/green_deep</item>
+<!--        <item name="colorPrimaryContainer">@color/green_deep</item>-->
         <item name="colorSecondaryContainer">@color/green_deep</item>
 
     </style>
