@@ -12,6 +12,8 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import orlov.nyt.R
 import orlov.nyt.databinding.ActivityMainBinding
+import orlov.nyt.utils.hide
+import orlov.nyt.utils.show
 
 
 @AndroidEntryPoint
@@ -34,8 +36,8 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.findNavController()
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.splashFragment, R.id.authFragment -> hideNavBar()
-                else -> showNavBar()
+                R.id.splashFragment, R.id.authFragment -> binding.nvBottomNavigation.hide()
+                else -> binding.nvBottomNavigation.show()
             }
         }
         binding.nvBottomNavigation.apply {
@@ -44,26 +46,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showNavBar() {
-        binding.nvBottomNavigation.apply {
-            if (this.visibility == View.GONE || this.visibility == View.INVISIBLE) {
-                this.visibility = View.VISIBLE
-            }
-        }
-    }
-
-    private fun hideNavBar() {
-        binding.nvBottomNavigation.apply {
-            if (this.visibility == View.VISIBLE) {
-                this.visibility = View.GONE
-            }
-        }
-    }
-
     override fun onBackPressed() {
-        when (binding.nvBottomNavigation.selectedItemId) {
-            R.id.homeFragment, R.id.searchFragment, R.id.profileFragment, R.id.bookmarksFragment -> finish()
-            else -> super.onBackPressed()
+        binding.apply {
+            when (nvBottomNavigation.selectedItemId) {
+                R.id.searchFragment, R.id.profileFragment, R.id.bookmarksFragment -> nvBottomNavigation.selectedItemId =
+                    R.id.homeFragment
+                R.id.homeFragment -> finish()
+                else -> super.onBackPressed()
+            }
         }
     }
 }

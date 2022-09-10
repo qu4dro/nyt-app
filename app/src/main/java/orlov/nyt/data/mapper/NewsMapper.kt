@@ -9,7 +9,11 @@ fun Result.mapToDomain(): Article {
     return Article(
         this.abstract,
         this.byline,
-        this.multimedia?.map { it.mapToDomain() } ?: listOf(),
+        this.multimedia?.map { it.mapToDomain() } ?: listOf<ArticlePhoto>(
+            ArticlePhoto("", ""),
+            ArticlePhoto("", ""),
+            ArticlePhoto("", "")
+        ),
         this.published_date,
         this.subsection,
         this.title,

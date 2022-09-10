@@ -6,6 +6,6 @@ import orlov.nyt.utils.Request
 
 interface NewsRepository {
 
-    suspend fun fetchTopNews(): Flow<Request<List<Article>>>
+    suspend fun fetchTopNews(section: String): Flow<Request<List<Article>>>
 
 }

@@ -13,11 +13,11 @@ class NewsRepositoryImpl @Inject constructor(
     private val newsService: NewsService
 ) : NewsRepository {
 
-    override suspend fun fetchTopNews(): Flow<Request<List<Article>>> {
+    override suspend fun fetchTopNews(section: String): Flow<Request<List<Article>>> {
         return RequestUtils.requestFlow {
-            val response = newsService.fetchTopNews()
-            val news = response.results.map { it.mapToDomain() }
-            news
+            val response = newsService.fetchTopNews(section)
+            val news = response.results
+            news.map { it.mapToDomain() }
         }
     }
 
