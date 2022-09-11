@@ -1,5 +1,9 @@
 package orlov.nyt.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Article(
     val abstract: String,
     val byline: String,
@@ -9,4 +13,4 @@ data class Article(
     val title: String,
     val id: String,
     val url: String
-)
+) : Parcelable

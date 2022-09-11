@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.findNavController()
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.splashFragment, R.id.authFragment -> binding.nvBottomNavigation.hide()
+                R.id.splashFragment, R.id.authFragment, R.id.articleFragment -> binding.nvBottomNavigation.hide()
                 else -> binding.nvBottomNavigation.show()
             }
         }
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         binding.apply {
-            when (nvBottomNavigation.selectedItemId) {
+            when (navController.currentDestination?.id) {
                 R.id.searchFragment, R.id.profileFragment, R.id.bookmarksFragment -> nvBottomNavigation.selectedItemId =
                     R.id.homeFragment
                 R.id.homeFragment -> finish()

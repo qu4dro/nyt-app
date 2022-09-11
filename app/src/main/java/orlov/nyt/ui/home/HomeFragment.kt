@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.google.android.material.chip.Chip
@@ -25,7 +26,10 @@ import timber.log.Timber
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel: HomeViewModel by activityViewModels()
-    private val adapter = ArticlesAdapter {}
+    private val adapter = ArticlesAdapter {
+        val action = HomeFragmentDirections.actionHomeFragmentToArticleFragment(it)
+        findNavController().navigate(action)
+    }
 
     private var _binding: FragmentHomeBinding? = null
     val binding
