@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -81,9 +82,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             viewModel.uiState.value.sections.forEach { section ->
                 val chip = Chip(requireContext())
                 chip.text = section
+                chip.isCheckable = true
+                if (section == viewModel.uiState.value.selectedSection) chip.isChecked = true
                 chip.setOnClickListener {
-                    viewModel.selectSection(section)
-                    viewModel.fetchTopNews(section)
+                    if (!chip.isChecked) {
+                        chip.isChecked = !chip.isChecked
+                    } else {
+                        viewModel.selectSection(section)
+                        viewModel.fetchTopNews(section)
+                    }
                     rvTrendingNews.scrollToPosition(0)
                 }
                 chipsSection.addView(chip)
