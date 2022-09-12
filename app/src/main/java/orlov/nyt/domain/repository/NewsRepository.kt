@@ -13,4 +13,6 @@ interface NewsRepository {
 
     suspend fun saveArticle(article: Article)
 
+    suspend fun deleteArticle(article: Article)
+
 }

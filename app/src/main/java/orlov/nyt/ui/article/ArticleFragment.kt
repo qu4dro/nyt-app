@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import orlov.nyt.R
 import orlov.nyt.databinding.FragmentArticleBinding
+import orlov.nyt.domain.model.Article
+import timber.log.Timber
 
 class ArticleFragment : Fragment(R.layout.fragment_article) {
 
@@ -32,11 +36,42 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
+        viewModel.selectedArticles.observe(viewLifecycleOwner) { articles ->
+            val saveState = articles.map { it.id }.filter { it == args.article.id }.contains(args.article.id)
+            updateSaveIconState(saveState)
+            binding.toolbar.setOnMenuItemClickListener { item ->
+                if (item.itemId == R.id.saveArticle) {
+                    if (saveState) deleteArticle(args.article) else saveArticle(args.article)
+                }
+                true
+            }
+
+        }
     }
 
     private fun setupUI() {
         binding.apply {
             article = args.article
+            toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+            tvShare.setOnClickListener {  }
+            tvSource.setOnClickListener {  }
+            fabComments.setOnClickListener {  }
+        }
+    }
+
+    private fun saveArticle(article: Article) {
+        viewModel.saveArticle(article)
+        Toast.makeText(requireContext(), R.string.article_bookmarked, Toast.LENGTH_LONG).show()
+    }
+
+    private fun deleteArticle(article: Article) {
+        viewModel.deleteArticle(article)
+        Toast.makeText(requireContext(), R.string.article_deleted, Toast.LENGTH_LONG).show()
+    }
+
+    private fun updateSaveIconState(saveState: Boolean) {
+        binding.toolbar.menu.findItem(R.id.saveArticle).apply {
+            if (saveState) setIcon(R.drawable.ic_unbookmark) else setIcon(R.drawable.ic_bookmark)
         }
     }
 

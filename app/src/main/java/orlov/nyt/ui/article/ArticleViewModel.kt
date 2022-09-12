@@ -12,8 +12,16 @@ import javax.inject.Inject
 @HiltViewModel
 class ArticleViewModel @Inject constructor(private val newsUseCases: NewsUseCases) : ViewModel() {
 
-    suspend fun saveArticle(article: Article) = viewModelScope.launch(Dispatchers.IO) {
+    private var _selectedArticles = newsUseCases.fetchSavedNewsUseCase.invoke()
+    val selectedArticles
+        get() = _selectedArticles
+
+    fun saveArticle(article: Article) = viewModelScope.launch(Dispatchers.IO) {
         newsUseCases.saveArticleUseCase.invoke(article)
+    }
+
+    fun deleteArticle(article: Article) = viewModelScope.launch(Dispatchers.IO) {
+        newsUseCases.deleteArticleUseCase.invoke(article)
     }
 
 }

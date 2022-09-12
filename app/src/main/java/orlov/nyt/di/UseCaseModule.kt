@@ -5,11 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import orlov.nyt.data.repository.NewsRepositoryImpl
-import orlov.nyt.domain.repository.NewsRepository
-import orlov.nyt.domain.usecase.news.FetchSavedNewsUseCase
-import orlov.nyt.domain.usecase.news.FetchTopNewsUseCase
-import orlov.nyt.domain.usecase.news.NewsUseCases
-import orlov.nyt.domain.usecase.news.SaveArticleUseCase
+import orlov.nyt.domain.usecase.news.*
 import javax.inject.Singleton
 
 @Module
@@ -31,13 +27,25 @@ object UseCaseModule {
     fun provideSaveArticleUseCase(newsRepository: NewsRepositoryImpl) =
         SaveArticleUseCase(newsRepository)
 
+
+    @Provides
+    @Singleton
+    fun provideDeleteArticleUseCase(newsRepository: NewsRepositoryImpl) =
+        DeleteArticleUseCase(newsRepository)
+
     @Provides
     @Singleton
     fun provideNewsUseCases(
         fetchTopNewsUseCase: FetchTopNewsUseCase,
         fetchSavedNewsUseCase: FetchSavedNewsUseCase,
-        saveArticleUseCase: SaveArticleUseCase
+        saveArticleUseCase: SaveArticleUseCase,
+        deleteArticleUseCase: DeleteArticleUseCase
     ) =
-        NewsUseCases(fetchTopNewsUseCase, fetchSavedNewsUseCase, saveArticleUseCase)
+        NewsUseCases(
+            fetchTopNewsUseCase,
+            fetchSavedNewsUseCase,
+            saveArticleUseCase,
+            deleteArticleUseCase
+        )
 
 }

@@ -5,4 +5,11 @@
     <string name="profile">Profile</string>
     <string name="search">Search</string>
     <string name="t">T</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="article_bookmarked">Article added to bookmarks</string>
+    <string name="article_deleted">Article removed from bookmarks</string>
+
+    <string name="tmp_article_text">Message from the developer. Unfortunately, this api does not allow viewing the full text of the article,so for the sake of beauty, I will temporarily add this text here and duplicate it several times. Maybe later I will make a custom parserfrom the link, but not now.\nMessage from the developer. Unfortunately, this api does not allow viewing the full text of the article, so for the sake of beauty, I will temporarily add this text here and duplicate it several times. Maybe later I will make a custom parser from the link, but not now.\nMessage from the developer. Unfortunately, this api does not allow viewing the full text of the article, so for the sake of beauty, I will temporarily add this text here and duplicate it several times. Maybe later I will make a custom parser from the link, but not now.</string>
+    <string name="source">Source</string>
+    <string name="share">Share</string>
 </resources>

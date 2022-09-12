@@ -19,4 +19,7 @@ interface NewsDao {
     @Delete
     suspend fun deleteArticle(article: ArticleEntity)
 
+    @Query("SELECT * FROM articles WHERE id = :id LIMIT 1")
+    fun fetchArticle(id: String): ArticleEntity
+
 }

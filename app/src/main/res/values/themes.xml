@@ -19,7 +19,7 @@
 
         <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@android:color/transparent</item>
 
-<!--        <item name="colorPrimaryContainer">@color/green_deep</item>-->
+        <item name="colorPrimaryContainer">@color/green_deep</item>
         <item name="colorSecondaryContainer">@color/green_deep</item>
 
     </style>
