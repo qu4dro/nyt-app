@@ -99,6 +99,9 @@ dependencies {
     // Mask
     implementation "com.github.RedMadRobot:input-mask-android:$mask_version"
 
+    // Gson
+    implementation "com.google.code.gson:gson:$gson_version"
+
     // Datastore
     implementation "androidx.datastore:datastore-preferences:$datastore_version"
     implementation "androidx.datastore:datastore:$datastore_version"

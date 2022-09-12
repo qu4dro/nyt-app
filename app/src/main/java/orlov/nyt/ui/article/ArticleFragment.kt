@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import orlov.nyt.R
 import orlov.nyt.databinding.FragmentArticleBinding
 
 class ArticleFragment : Fragment(R.layout.fragment_article) {
+
+    private val viewModel: ArticleViewModel by activityViewModels()
 
     private var _binding: FragmentArticleBinding? = null
     val binding

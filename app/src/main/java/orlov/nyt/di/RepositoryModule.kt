@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import orlov.nyt.data.db.NewsDao
 import orlov.nyt.data.network.service.NewsService
 import orlov.nyt.data.repository.NewsRepositoryImpl
 import javax.inject.Singleton
@@ -14,6 +15,6 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideNewsRepository(newsService: NewsService) = NewsRepositoryImpl(newsService)
+    fun provideNewsRepository(newsService: NewsService, newsDao: NewsDao) = NewsRepositoryImpl(newsService, newsDao)
 
 }
