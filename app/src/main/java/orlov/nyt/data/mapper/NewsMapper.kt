@@ -46,7 +46,7 @@ fun Article.mapToEntity(): ArticleEntity {
 
 fun ArticleEntity.mapToDomain(): Article {
     return Article(
-        this.abstract,
+        this.caption,
         this.byline,
         this.photos.map { it.mapToDomain() },
         this.published_date,
