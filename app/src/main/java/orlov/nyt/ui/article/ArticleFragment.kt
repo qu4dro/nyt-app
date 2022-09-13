@@ -42,6 +42,8 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
 
+        Timber.d(args.article.toString())
+
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.selectedArticles.collect { articles ->
@@ -49,7 +51,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
                     updateSaveIconState(saveState)
                     binding.toolbar.setOnMenuItemClickListener { item ->
                         if (item.itemId == R.id.saveArticle) {
-                            if (saveState) deleteArticle(args.article) else saveArticle(args.article)
+                            if (saveState) deleteArticle(args.article) else saveArticle(args.article.copy())
                         }
                         true
                     }

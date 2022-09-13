@@ -1,10 +1,12 @@
 package orlov.nyt.data.db.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "articles")
 data class ArticleEntity(
+    @ColumnInfo(name = "caption")
     var abstract: String,
     var byline: String,
     var photos: List<ArticlePhotoEntity>,

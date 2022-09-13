@@ -3,7 +3,6 @@
 
     <style name="Text" parent="TextAppearance.AppCompat" />
 
-
     <style name="Text.Logo">
         <item name="fontFamily">@font/chomsky</item>
         <item name="android:textSize">256sp</item>
@@ -11,7 +10,7 @@
 
     <style name="Text.Header">
         <item name="fontFamily">@font/chomsky</item>
-        <item name="android:textSize">36sp</item>
+        <item name="android:textSize">32sp</item>
     </style>
 
     <!--Semibold-->
@@ -19,19 +18,29 @@
         <item name="fontFamily">@font/manrope_semi_bold</item>
     </style>
 
-    <style name="Text.Semibold.24">
-        <item name="android:textSize">24sp</item>
-        <item name="lineHeight">28.8sp</item>
-    </style>
-
     <style name="Text.Semibold.56">
         <item name="android:textSize">56sp</item>
         <item name="lineHeight">60sp</item>
     </style>
 
+    <style name="Text.Semibold.24">
+        <item name="android:textSize">24sp</item>
+        <item name="lineHeight">26sp</item>
+    </style>
+
+    <style name="Text.Semibold.22">
+        <item name="android:textSize">22sp</item>
+        <item name="lineHeight">22sp</item>
+    </style>
+
     <style name="Text.Semibold.20">
         <item name="android:textSize">20sp</item>
-        <item name="lineHeight">20sp</item>
+        <item name="lineHeight">21sp</item>
+    </style>
+
+    <style name="Text.Semibold.18">
+        <item name="android:textSize">18sp</item>
+        <item name="lineHeight">19sp</item>
     </style>
 
     <style name="Text.Semibold.16">
@@ -41,6 +50,11 @@
 
     <style name="Text.Semibold.14">
         <item name="android:textSize">14sp</item>
+        <item name="lineHeight">15sp</item>
+    </style>
+
+    <style name="Text.Semibold.12">
+        <item name="android:textSize">12sp</item>
         <item name="lineHeight">16sp</item>
 
     </style>
@@ -57,7 +71,7 @@
 
     <style name="Text.Medium.18">
         <item name="android:textSize">18sp</item>
-        <item name="lineHeight">27sp</item>
+        <item name="lineHeight">20sp</item>
     </style>
 
     <style name="Text.Medium.16">
@@ -77,12 +91,12 @@
 
     <style name="Text.Medium.10">
         <item name="lineHeight">15sp</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
-<!--    <style name="Text.Medium.10.Grey">-->
-<!--        <item name="android:textColor">@color/grey</item>-->
-<!--    </style>-->
+    <!--    <style name="Text.Medium.10.Grey">-->
+    <!--        <item name="android:textColor">@color/grey</item>-->
+    <!--    </style>-->
 
     <!--Regular-->
     <style name="Text.Regular">
@@ -99,18 +113,18 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-<!--    <style name="Text.Regular.14.Grey">-->
-<!--        <item name="android:textColor">@color/grey</item>-->
-<!--    </style>-->
+    <!--    <style name="Text.Regular.14.Grey">-->
+    <!--        <item name="android:textColor">@color/grey</item>-->
+    <!--    </style>-->
 
     <style name="Text.Regular.12">
         <item name="lineHeight">18sp</item>
         <item name="android:textSize">12sp</item>
     </style>
 
-<!--    <style name="Text.Regular.12.Grey">-->
-<!--        <item name="android:textColor">@color/grey</item>-->
-<!--    </style>-->
+    <!--    <style name="Text.Regular.12.Grey">-->
+    <!--        <item name="android:textColor">@color/grey</item>-->
+    <!--    </style>-->
 
     <!--Light-->
     <style name="Text.Light">
@@ -122,8 +136,8 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-<!--    <style name="Text.Light.12.Grey">-->
-<!--        <item name="android:textColor">@color/grey_profile_text</item>-->
-<!--    </style>-->
+    <!--    <style name="Text.Light.12.Grey">-->
+    <!--        <item name="android:textColor">@color/grey_profile_text</item>-->
+    <!--    </style>-->
 
 </resources>

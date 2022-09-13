@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="article"
             type="orlov.nyt.domain.model.Article" />
@@ -17,9 +18,9 @@
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:padding="8dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/iv_photo"
@@ -37,28 +38,31 @@
                 android:id="@+id/tv_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="3"
-                android:lines="3"
                 android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:lines="3"
+                android:maxLines="3"
                 android:text="@{article.title}"
                 android:textAppearance="@style/Text.Semibold.14"
-                app:layout_constraintTop_toBottomOf="@id/iv_photo"
                 app:layout_constraintEnd_toEndOf="@id/iv_photo"
                 app:layout_constraintStart_toStartOf="@id/iv_photo"
+                app:layout_constraintTop_toBottomOf="@id/iv_photo"
                 tools:text="Test text article title Test text article titleTest text article title" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 date="@{article.published_date}"
+                android:layout_width="0dp"
+                android:layout_marginTop="2dp"
+                android:layout_height="wrap_content"
                 android:alpha="0.5"
-                android:textAppearance="@style/Text.Medium.10"
-                tools:text="9 Sep"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textAppearance="@style/Text.Semibold.10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                tools:text="9 Sep" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/divider"

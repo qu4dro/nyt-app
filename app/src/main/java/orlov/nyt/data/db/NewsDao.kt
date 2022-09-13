@@ -14,7 +14,7 @@ interface NewsDao {
     suspend fun insertArticle(article: ArticleEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertArticle(articles: List<ArticleEntity>)
+    suspend fun insertArticles(articles: List<ArticleEntity>)
 
     @Delete
     suspend fun deleteArticle(article: ArticleEntity)

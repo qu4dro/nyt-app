@@ -12,16 +12,16 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_marginTop="8dp"
         android:id="@+id/cv_article"
         style="@style/ArticleCardStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:padding="8dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/iv_photo"
@@ -39,7 +39,7 @@
                 android:id="@+id/tv_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:text="@{article.title}"
@@ -52,16 +52,18 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_author_date"
+                author="@{article.byline}"
+                date="@{article.published_date}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:alpha="0.5"
-                author="@{article.byline}"
-                date="@{article.published_date}"
-                android:textAppearance="@style/Text.Medium.10"
-                tools:text="by Peter Red / 2 hours ago"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textAppearance="@style/Text.Semibold.12"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                tools:text="by Peter Red / 2 hours ago" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/divider"

@@ -17,4 +17,13 @@
         <item name="android:backgroundTint">@android:color/transparent</item>
     </style>
 
+    <style name="ChipStyle" parent="Widget.Material3.Chip.Assist">
+        <item name="android:textAppearance">@style/Text.Semibold.14</item>
+    </style>
+
+    <style name="ChipShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+
 </resources>

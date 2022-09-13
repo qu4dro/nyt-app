@@ -22,5 +22,7 @@
         <item name="colorPrimaryContainer">@color/green_deep</item>
         <item name="colorSecondaryContainer">@color/green_deep</item>
 
+        <item name="chipStyle">@style/ChipStyle</item>
+
     </style>
 </resources>
