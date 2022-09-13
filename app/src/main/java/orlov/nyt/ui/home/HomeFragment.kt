@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -14,14 +13,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.google.android.material.chip.Chip
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import orlov.nyt.R
 import orlov.nyt.databinding.FragmentHomeBinding
 import orlov.nyt.domain.model.Article
 import orlov.nyt.ui.adapters.ArticlesAdapter
-import orlov.nyt.utils.collectLatestLifecycleFlow
-import timber.log.Timber
 
 
 class HomeFragment : Fragment(R.layout.fragment_home) {

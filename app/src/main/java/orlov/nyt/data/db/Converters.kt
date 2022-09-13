@@ -8,7 +8,7 @@ import orlov.nyt.data.db.entity.ArticlePhotoEntity
 class Converters {
 
     @TypeConverter
-    fun photosToString(photos: List<ArticlePhotoEntity>) = Gson().toJson(photos)
+    fun photosToString(photos: List<ArticlePhotoEntity>): String = Gson().toJson(photos)
 
     @TypeConverter
     fun stringToPhotos(photoString: String): List<ArticlePhotoEntity> {
