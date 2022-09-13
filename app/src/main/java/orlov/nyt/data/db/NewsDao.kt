@@ -1,14 +1,14 @@
 package orlov.nyt.data.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 import orlov.nyt.data.db.entity.ArticleEntity
 
 @Dao
 interface NewsDao {
 
-    @Query("SELECT * FROM articles")
-    fun fetchSavedNews(): LiveData<List<ArticleEntity>>
+    @Query("SELECT * FROM articles ORDER BY published_date")
+    fun fetchSavedNews(): Flow<List<ArticleEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertArticle(article: ArticleEntity)

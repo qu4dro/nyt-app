@@ -6,14 +6,23 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import orlov.nyt.databinding.ItemArticleBigBinding
+import orlov.nyt.databinding.ItemArticleSavedBinding
 import orlov.nyt.databinding.ItemArticleSmallBinding
 import orlov.nyt.domain.model.Article
 
-class ArticlesAdapter(private val onClickPhoto: (Article) -> Unit) :
+class ArticlesAdapter(
+    private val clickListener: OnItemClickListener,
+    private val recyclerType: RecyclerType = RecyclerType.DEFAULT
+) :
     ListAdapter<Article, RecyclerView.ViewHolder>(ArticleDiffUtil) {
 
-    enum class VIEW_TYPE {
+    interface OnItemClickListener {
+        fun onArticleClick(article: Article)
+    }
 
+    enum class RecyclerType {
+        DEFAULT,
+        COMPACT
     }
 
     inner class ArticlesBigViewHolder(
@@ -22,7 +31,7 @@ class ArticlesAdapter(private val onClickPhoto: (Article) -> Unit) :
         fun bind(article: Article) {
             binding.article = article
             binding.executePendingBindings()
-            binding.root.setOnClickListener { onClickPhoto(article) }
+            binding.root.setOnClickListener { clickListener.onArticleClick(article) }
         }
     }
 
@@ -32,7 +41,17 @@ class ArticlesAdapter(private val onClickPhoto: (Article) -> Unit) :
         fun bind(article: Article) {
             binding.article = article
             binding.executePendingBindings()
-            binding.root.setOnClickListener { onClickPhoto(article) }
+            binding.root.setOnClickListener { clickListener.onArticleClick(article) }
+        }
+    }
+
+    inner class ArticlesSavedViewHolder(
+        private val binding: ItemArticleSavedBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(article: Article) {
+            binding.article = article
+            binding.executePendingBindings()
+            binding.root.setOnClickListener { clickListener.onArticleClick(article) }
         }
     }
 
@@ -43,43 +62,40 @@ class ArticlesAdapter(private val onClickPhoto: (Article) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        when(viewType) {
-            1 -> return ArticlesBigViewHolder(
-                ItemArticleBigBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+        val bigViewHolder = ArticlesBigViewHolder(
+            ItemArticleBigBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
             )
-            2 -> return ArticlesSmallViewHolder(
-                ItemArticleSmallBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+        )
+        val smallViewHolder = ArticlesSmallViewHolder(
+            ItemArticleSmallBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
             )
-           else -> return ArticlesSmallViewHolder(
-               ItemArticleSmallBinding.inflate(
-                   LayoutInflater.from(parent.context),
-                   parent,
-                   false
-               )
-           )
+        )
+        val savedViewHolder = ArticlesSavedViewHolder(
+            ItemArticleSavedBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+        return when (recyclerType) {
+            RecyclerType.DEFAULT -> if (viewType == 1) bigViewHolder else smallViewHolder
+            RecyclerType.COMPACT -> savedViewHolder
         }
 
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val article = getItem(position)
-        when(holder.itemViewType) {
-            1 -> {
-                val viewHolderBig = holder as ArticlesBigViewHolder
-                viewHolderBig.bind(article)
-            }
-            2-> {
-                val viewHolderSmall = holder as ArticlesSmallViewHolder
-                viewHolderSmall.bind(article)
-            }
+        when (holder) {
+            is ArticlesBigViewHolder -> holder.bind(article)
+            is ArticlesSmallViewHolder -> holder.bind(article)
+            is ArticlesSavedViewHolder -> holder.bind(article)
         }
 
     }

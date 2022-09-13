@@ -3,6 +3,7 @@ package orlov.nyt.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import orlov.nyt.data.db.NewsDao
 import orlov.nyt.data.mapper.mapToDomain
 import orlov.nyt.data.mapper.mapToEntity
@@ -34,8 +35,9 @@ class NewsRepositoryImpl @Inject constructor(
         newsDao.deleteArticle(article.mapToEntity())
     }
 
-    override fun fetchSavedNews(): LiveData<List<Article>> {
-        return Transformations.map(newsDao.fetchSavedNews()) { articles -> articles.map { it.mapToDomain() }}
+    override fun fetchSavedNews(): Flow<List<Article>> {
+        val articles = newsDao.fetchSavedNews()
+        return articles.map { list -> list.map { it.mapToDomain() } }
     }
 
 

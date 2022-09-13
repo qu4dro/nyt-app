@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import orlov.nyt.R
 import orlov.nyt.databinding.FragmentHomeBinding
+import orlov.nyt.domain.model.Article
 import orlov.nyt.ui.adapters.ArticlesAdapter
 import orlov.nyt.utils.collectLatestLifecycleFlow
 import timber.log.Timber
@@ -26,10 +27,14 @@ import timber.log.Timber
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel: HomeViewModel by activityViewModels()
-    private val adapter = ArticlesAdapter {
-        val action = HomeFragmentDirections.actionHomeFragmentToArticleFragment(it)
-        findNavController().navigate(action)
-    }
+    private val adapter = ArticlesAdapter(
+        object : ArticlesAdapter.OnItemClickListener {
+            override fun onArticleClick(article: Article) {
+                val action = HomeFragmentDirections.actionHomeFragmentToArticleFragment(article)
+                findNavController().navigate(action)
+            }
+        }
+    )
 
     private var _binding: FragmentHomeBinding? = null
     val binding

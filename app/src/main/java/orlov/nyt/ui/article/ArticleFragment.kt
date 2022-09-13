@@ -7,8 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import orlov.nyt.R
 import orlov.nyt.databinding.FragmentArticleBinding
 import orlov.nyt.domain.model.Article
@@ -36,16 +41,20 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
-        viewModel.selectedArticles.observe(viewLifecycleOwner) { articles ->
-            val saveState = articles.map { it.id }.filter { it == args.article.id }.contains(args.article.id)
-            updateSaveIconState(saveState)
-            binding.toolbar.setOnMenuItemClickListener { item ->
-                if (item.itemId == R.id.saveArticle) {
-                    if (saveState) deleteArticle(args.article) else saveArticle(args.article)
-                }
-                true
-            }
 
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.selectedArticles.collect { articles ->
+                    val saveState = articles.map { it.id }.filter { it == args.article.id }.contains(args.article.id)
+                    updateSaveIconState(saveState)
+                    binding.toolbar.setOnMenuItemClickListener { item ->
+                        if (item.itemId == R.id.saveArticle) {
+                            if (saveState) deleteArticle(args.article) else saveArticle(args.article)
+                        }
+                        true
+                    }
+                }
+            }
         }
     }
 
@@ -53,9 +62,9 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
         binding.apply {
             article = args.article
             toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
-            tvShare.setOnClickListener {  }
-            tvSource.setOnClickListener {  }
-            fabComments.setOnClickListener {  }
+            tvShare.setOnClickListener { }
+            tvSource.setOnClickListener { }
+            fabComments.setOnClickListener { }
         }
     }
 
