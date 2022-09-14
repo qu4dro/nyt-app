@@ -4,5 +4,5 @@ import orlov.nyt.domain.model.Article
 
 data class BookmarksUiState(
     val articleItems: List<Article> = listOf(),
-    val isEmpty: Boolean = true
+    val isEmpty: Boolean = false
 )

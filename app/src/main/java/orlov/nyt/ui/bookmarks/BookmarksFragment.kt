@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import orlov.nyt.R
@@ -48,21 +50,27 @@ class BookmarksFragment : Fragment(R.layout.fragment_bookmarks) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.rvSavedNews.adapter = adapter
-
+        postponeEnterTransition()
+        setupUI()
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
-                    adapter.submitList(uiState.articleItems)
                     binding.apply {
                         rvSavedNews.visibility = if (uiState.isEmpty) View.GONE else View.VISIBLE
                         groupHint.visibility = if (uiState.isEmpty) View.VISIBLE else View.GONE
+                    }
+                    adapter.submitList(uiState.articleItems)
+                    (view.parent as? ViewGroup)?.doOnPreDraw {
+                        startPostponedEnterTransition()
                     }
                 }
             }
         }
 
+    }
+
+    private fun setupUI() {
+        binding.rvSavedNews.adapter = adapter
     }
 
     override fun onDestroyView() {
