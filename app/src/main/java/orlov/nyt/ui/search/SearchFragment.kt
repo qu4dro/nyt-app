@@ -9,12 +9,16 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.launch
 import orlov.nyt.R
 import orlov.nyt.databinding.FragmentSearchBinding
 import orlov.nyt.domain.model.Article
 import orlov.nyt.ui.adapters.ArticlesAdapter
-import orlov.nyt.ui.bookmarks.BookmarksFragmentDirections
+import orlov.nyt.utils.LoadState
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
@@ -24,7 +28,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         object : ArticlesAdapter.OnItemClickListener {
             override fun onArticleClick(article: Article) {
                 val action =
-                    BookmarksFragmentDirections.actionBookmarksFragmentToArticleFragment(article)
+                    SearchFragmentDirections.actionSearchFragmentToArticleFragment(article)
                 findNavController().navigate(action)
             }
         },
@@ -51,6 +55,35 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun setupObservers() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    when (uiState.loadState) {
+                        LoadState.LOADING -> {
+                            setLoadingUI()
+                        }
+                        LoadState.ERROR -> {
+                            setErrorUI()
+                        }
+                        LoadState.SUCCESS -> {
+                            adapter.submitList(uiState.articleItems)
+                            setSuccessUI()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setSuccessUI() {
+
+    }
+
+    private fun setErrorUI() {
+
+    }
+
+    private fun setLoadingUI() {
 
     }
 
@@ -59,6 +92,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         binding.apply {
             rvSearchedNews.adapter = adapter
             edtSearch.doOnTextChanged { text, _, _, _ ->
+                viewModel.searchNews(text.toString().trim())
             }
         }
 

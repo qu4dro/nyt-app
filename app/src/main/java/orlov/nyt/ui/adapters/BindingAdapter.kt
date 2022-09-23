@@ -9,7 +9,7 @@ import orlov.nyt.utils.DateUtils.formatDate
 import orlov.nyt.utils.setBlackAndWhite
 
 @BindingAdapter("imageUrl")
-fun bindArticlePhoto(imgView: ImageView, url: String) {
+fun bindArticlePhoto(imgView: ImageView, url: String?) {
     imgView.load(url) {
         placeholder(R.drawable.image_placeholder)
         error(R.drawable.image_placeholder)

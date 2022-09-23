@@ -10,6 +10,7 @@ import orlov.nyt.domain.model.Article
 import orlov.nyt.domain.repository.NewsRepository
 import orlov.nyt.utils.Request
 import orlov.nyt.utils.RequestUtils
+import timber.log.Timber
 import javax.inject.Inject
 
 class NewsRepositoryImpl @Inject constructor(
@@ -31,6 +32,19 @@ class NewsRepositoryImpl @Inject constructor(
 
     override suspend fun deleteArticle(article: Article) {
         newsDao.deleteArticle(article.mapToEntity())
+    }
+
+    override suspend fun searchNews(searchQuery: String): Flow<Request<List<Article>>> {
+        return RequestUtils.requestFlow {
+            try {
+                val response = newsService.searchNews(searchQuery)
+                val news = response.results.docs
+                news.map { it.mapToDomain() }
+            } catch (e: Exception) {
+                Timber.d(e.message.toString())
+                listOf()
+            }
+        }
     }
 
     override fun fetchSavedNews(): Flow<List<Article>> {

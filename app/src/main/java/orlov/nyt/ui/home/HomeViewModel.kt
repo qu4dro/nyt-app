@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import orlov.nyt.domain.usecase.news.NewsUseCases
+import orlov.nyt.utils.LoadState
 import orlov.nyt.utils.Request
 import javax.inject.Inject
 

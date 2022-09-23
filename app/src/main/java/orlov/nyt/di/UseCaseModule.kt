@@ -35,17 +35,24 @@ object UseCaseModule {
 
     @Provides
     @Singleton
+    fun provideSearchNewsUseCase(newsRepository: NewsRepositoryImpl) =
+        SearchNewsUseCase(newsRepository)
+
+    @Provides
+    @Singleton
     fun provideNewsUseCases(
         fetchTopNewsUseCase: FetchTopNewsUseCase,
         fetchSavedNewsUseCase: FetchSavedNewsUseCase,
         saveArticleUseCase: SaveArticleUseCase,
-        deleteArticleUseCase: DeleteArticleUseCase
+        deleteArticleUseCase: DeleteArticleUseCase,
+        searchNewsUseCase: SearchNewsUseCase
     ) =
         NewsUseCases(
             fetchTopNewsUseCase,
             fetchSavedNewsUseCase,
             saveArticleUseCase,
-            deleteArticleUseCase
+            deleteArticleUseCase,
+            searchNewsUseCase
         )
 
 }

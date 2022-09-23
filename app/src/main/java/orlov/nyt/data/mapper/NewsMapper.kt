@@ -2,6 +2,7 @@ package orlov.nyt.data.mapper
 
 import orlov.nyt.data.db.entity.ArticleEntity
 import orlov.nyt.data.db.entity.ArticlePhotoEntity
+import orlov.nyt.data.network.model.Doc
 import orlov.nyt.data.network.model.Multimedia
 import orlov.nyt.data.network.model.Result
 import orlov.nyt.domain.model.Article
@@ -28,6 +29,23 @@ fun Multimedia.mapToDomain(): ArticlePhoto {
     return ArticlePhoto(
         this.caption,
         this.url
+    )
+}
+
+fun Doc.mapToDomain(): Article {
+    return Article(
+        this.abstract,
+        this.byline.person.toString(),
+        this.multimedia?.map { it.mapToDomain() } ?: listOf<ArticlePhoto>(
+            ArticlePhoto("", ""),
+            ArticlePhoto("", ""),
+            ArticlePhoto("", "")
+        ),
+        this.pub_date ?: "",
+        this.section_name ?: "",
+        this.headline.name ?: "",
+        this.uri ?: "",
+        this.web_url ?: ""
     )
 }
 

@@ -1,6 +1,7 @@
 package orlov.nyt.ui.home
 
 import orlov.nyt.domain.model.Article
+import orlov.nyt.utils.LoadState
 
 data class HomeUiState(
     val loadState: LoadState = LoadState.SUCCESS,
@@ -38,9 +39,3 @@ val sectionsList = listOf<String>(
     "us",
     "world"
 )
-
-enum class LoadState {
-    LOADING,
-    ERROR,
-    SUCCESS
-}

@@ -14,4 +14,6 @@ interface NewsRepository {
 
     suspend fun deleteArticle(article: Article)
 
+    suspend fun searchNews(searchQuery: String): Flow<Request<List<Article>>>
+
 }

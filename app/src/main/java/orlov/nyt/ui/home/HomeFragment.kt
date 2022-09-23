@@ -19,6 +19,7 @@ import orlov.nyt.R
 import orlov.nyt.databinding.FragmentHomeBinding
 import orlov.nyt.domain.model.Article
 import orlov.nyt.ui.adapters.ArticlesAdapter
+import orlov.nyt.utils.LoadState
 
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
